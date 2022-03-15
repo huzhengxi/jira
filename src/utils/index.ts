@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from 'react';
 
-export const isFalsy = (value) => (value === 0 ? false : !value);
+export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 
-export const cleanObject = (object) => {
-  const result = { ...object };
+export const isVoid = (value: unknown) => value === undefined || value === null || value === '';
+
+export const cleanObject = (object: { [key: string]: unknown }) => {
+  const result = {...object};
   Object.keys(result).forEach((key) => {
     const value = result[key];
     if (isFalsy(value)) {
@@ -13,7 +15,7 @@ export const cleanObject = (object) => {
   return result;
 };
 
-export const useDebounce = (value, delay) => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     //每次在value变化以后，设置一个定时器
@@ -22,4 +24,11 @@ export const useDebounce = (value, delay) => {
     return () => clearTimeout(timeout);
   });
   return debouncedValue;
+};
+
+
+export const useMount = (callback: () => void) => {
+  useEffect(() => {
+    callback();
+  }, []);
 };

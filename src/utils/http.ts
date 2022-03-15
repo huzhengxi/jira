@@ -37,7 +37,7 @@ export const http = async (endpoint: string, {
       if (response.ok) {
         return data;
       } else {
-        return Promise.reject(response.json());
+        return Promise.reject(data);
       }
     });
 };

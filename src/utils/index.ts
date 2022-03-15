@@ -22,7 +22,7 @@ export const useDebounce = <V>(value: V, delay?: number) => {
     const timeout = setTimeout(() => setDebouncedValue(value), delay);
     //每次在上一个useEffect处理完以后在执行
     return () => clearTimeout(timeout);
-  });
+  }, [delay, value]);
   return debouncedValue;
 };
 

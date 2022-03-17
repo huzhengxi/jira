@@ -4,7 +4,8 @@
 import styled from '@emotion/styled';
 import {Spin, Typography} from 'antd';
 import {DevTools} from 'jira-dev-tool';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
+import {doc} from 'prettier';
 
 export const Row = styled.div<{
   gap?: number | boolean;
@@ -44,3 +45,16 @@ export const FullPageError = ({error}: { error: Error | null }) => (
   </FullPage>
 );
 
+export const useDocumentTitle = (title: string, keepOnUnmount: boolean = true) => {
+  const oldTitle = useRef(document.title).current;
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+  useEffect(() => {
+    return () => {
+      if (keepOnUnmount) {
+        document.title = oldTitle;
+      }
+    };
+  }, [title, oldTitle]);
+};

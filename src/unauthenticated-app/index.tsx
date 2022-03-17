@@ -10,8 +10,10 @@ import right from 'assets/right.svg';
 import logo from 'assets/logo.svg';
 import {RegisterScreen} from './register';
 import {LoginScreen} from './login';
+import {useDocumentTitle} from '../components/lib';
 
 export const UnauthenticatedApp = () => {
+  useDocumentTitle('登录注册')
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   return (

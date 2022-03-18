@@ -2,6 +2,8 @@ import React from 'react';
 import {User} from './search-panel';
 import {Table, TableProps} from 'antd';
 import dayjs from 'dayjs';
+import {Link} from 'react-router-dom';
+import {projectDB} from 'jira-dev-tool/dist/server/data/rest';
 
 export interface Project {
   id: string;
@@ -24,7 +26,10 @@ export const List = ({users, ...props}: ListProps) => {
       {
         title: '名称',
         dataIndex: 'name',
-        sorter: (a, b) => a.name.localeCompare(b.name)
+        sorter: (a, b) => a.name.localeCompare(b.name),
+        render(value, project) {
+          return <Link to={`projects/${String(project.id)}`}>{project.name}</Link>;
+        }
       },
       {
         title: '部门',

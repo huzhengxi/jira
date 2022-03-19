@@ -32,3 +32,8 @@ export const useMount = (callback: () => void) => {
     callback();
   }, []);
 };
+
+
+export const resetRoute = () => {
+  window.location.href = window.location.origin;
+};

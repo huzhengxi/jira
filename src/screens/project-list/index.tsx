@@ -7,14 +7,13 @@ import {Typography} from 'antd';
 import {useProjects} from '../../utils/project';
 import {useUsers} from '../../utils/user';
 import {useDocumentTitle} from '../../components/lib';
+import {useUrlQueryParam} from '../../utils/url';
+import {useProjectSearchParams} from './util';
 
 
 export const ProjectListScreen = () => {
   useDocumentTitle('项目列表');
-  const [param, setParam] = useState({
-    name: '',
-    personId: '',
-  });
+  const [param, setParam] = useProjectSearchParams();
   const debouncedParam = useDebounce(param, 200);
   const {error, isLoading, data: list} = useProjects(debouncedParam);
   const {data: users} = useUsers();
@@ -28,6 +27,8 @@ export const ProjectListScreen = () => {
     </Container>
   );
 };
+
+// ProjectListScreen.whyDidYouRender = true
 
 const Container = styled.div`
   display: flex;

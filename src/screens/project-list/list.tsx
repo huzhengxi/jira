@@ -8,7 +8,7 @@ import {projectDB} from 'jira-dev-tool/dist/server/data/rest';
 export interface Project {
   id: string;
   name: string;
-  personId: string;
+  personId: number;
   pin: boolean;
   organization: string;
   created: number;

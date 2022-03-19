@@ -63,6 +63,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.180",
     "@types/qs": "^6.9.7",
+    "@welldone-software/why-did-you-render": "^6.2.3",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.5.0",
     "husky": ">=6",

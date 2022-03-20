@@ -7,6 +7,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 interface Config extends RequestInit {
   token?: string;
   data?: object;
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | undefined;
 }
 
 export const http = async (endpoint: string, {
@@ -16,7 +17,7 @@ export const http = async (endpoint: string, {
     method: 'GET',
     headers: {
       Authorization: token ? `Bearer ${token}` : '',
-      'Content-Type': data ? 'application/json' : '',
+      'Content-Type': data ? 'application/json' : ''
     },
     ...customConfig
   };

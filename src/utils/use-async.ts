@@ -1,7 +1,7 @@
 /**
  * Created by jason on 2022/3/16.
  */
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {useMountedRef} from './index';
 
 interface State<D> {
@@ -31,18 +31,20 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
   });
   const mountedRef = useMountedRef();
 
-  const setData = (data: D) => setState({
-    data,
-    stat: 'success',
-    error: null
-  });
-  const setError = (error: Error) => setState({
-    data: null,
-    error: error,
-    stat: 'error'
-  });
+  const setData = useCallback(
+    (data: D) => setState({
+      data,
+      stat: 'success',
+      error: null
+    }), []);
+  const setError = useCallback(
+    (error: Error) => setState({
+      data: null,
+      error: error,
+      stat: 'error'
+    }), []);
 
-  const run = (promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
+  const run = useCallback((promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
     if (!promise || !promise.then) {
       throw new Error('请传入 Promise 类型数据');
     }
@@ -65,7 +67,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
           return Promise.reject(error);
         }
       });
-  };
+  }, [config.throwOnError, mountedRef, setData, setError]);
 
   return {
     isIdle: state.stat === 'idle',

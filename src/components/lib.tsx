@@ -2,10 +2,9 @@
  * Created by jason on 2022/3/12.
  */
 import styled from '@emotion/styled';
-import {Spin, Typography} from 'antd';
+import {Button, Spin, Typography} from 'antd';
 import {DevTools} from 'jira-dev-tool';
 import React, {useEffect, useRef} from 'react';
-import {doc} from 'prettier';
 
 export const Row = styled.div<{
   gap?: number | boolean;
@@ -56,5 +55,9 @@ export const useDocumentTitle = (title: string, keepOnUnmount: boolean = true) =
         document.title = oldTitle;
       }
     };
-  }, [title, oldTitle]);
+  }, [title, oldTitle, keepOnUnmount]);
 };
+
+export const ButtonNoPadding = styled(Button)`
+  padding: 0;
+`;

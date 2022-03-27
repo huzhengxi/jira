@@ -76,7 +76,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
           return Promise.reject(error);
         }
       });
-  }, [config.throwOnError, setData, setError]);
+  }, [config.throwOnError, safeDispatch, setData, setError]);
 
   return {
     isIdle: state.stat === 'idle',

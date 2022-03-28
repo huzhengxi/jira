@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useDebounce} from '../../utils';
 import {SearchPanel} from './search-panel';
 import {List} from './list';
@@ -7,7 +7,6 @@ import {Typography} from 'antd';
 import {useProjects} from '../../utils/project';
 import {useUsers} from '../../utils/user';
 import {useDocumentTitle} from '../../components/lib';
-import {useUrlQueryParam} from '../../utils/url';
 import {useProjectSearchParams} from './util';
 
 

@@ -12,50 +12,58 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {Route, Routes} from 'react-router';
 import {ProjectScreen} from '../screens/project';
 import {resetRoute} from '../utils';
+import {ProjectPopover} from '../components/project-popover';
+import {ProjectModal} from '../screens/project-list/project-modal';
 
 export const AuthenticatedApp = () => {
   return (
     <Container>
-      <PageHeader/>
-      <Main>
-        <Router>
+      <Router>
+        <PageHeader/>
+        <Main>
           <Routes>
             <Route path={'projects'} element={<ProjectListScreen/>}/>
             <Route path={'projects/:projectId/*'} element={<ProjectScreen/>}/>
             <Route index element={<ProjectListScreen/>}/>
           </Routes>
-        </Router>
-      </Main>
+        </Main>
+        <ProjectModal/>
+      </Router>
     </Container>
   );
 };
 
 const PageHeader = () => {
-  const {logout, user} = useAuth();
   return <Header between={true}>
     <HeaderLeft gap={true}>
       <Button type={'link'} onClick={resetRoute}>
         <Software width={'18rem'} color={'rgb(38, 132, 255)'}/>
       </Button>
-      <h2>项目</h2>
-      <h2>用户</h2>
+      <ProjectPopover/>
+      <span>用户</span>
     </HeaderLeft>
     <HeaderRight>
-      <Dropdown overlay={
-        <Menu>
-          <Menu.Item key={'logout'}>
-            <Button onClick={logout} type={'link'}>
-              登出
-            </Button>
-          </Menu.Item>
-        </Menu>
-      }>
-        <Button type={'link'} onClick={e => e.preventDefault()}>
-          Hi, {user?.name}
-        </Button>
-      </Dropdown>
+      <User/>
     </HeaderRight>
   </Header>;
+};
+
+const User = () => {
+  const {logout, user} = useAuth();
+
+  return <Dropdown overlay={
+    <Menu>
+      <Menu.Item key={'logout'}>
+        <Button onClick={logout} type={'link'}>
+          登出
+        </Button>
+      </Menu.Item>
+    </Menu>
+  }>
+    <Button type={'link'} onClick={e => e.preventDefault()}>
+      Hi, {user?.name}
+    </Button>
+  </Dropdown>;
 };
 
 const Container = styled.div`

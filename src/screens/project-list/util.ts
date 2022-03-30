@@ -3,6 +3,8 @@
  */
 import {useUrlQueryParam} from '../../utils/url';
 import {useMemo} from 'react';
+import {useSearchParams} from 'react-router-dom';
+import {useProject} from '../../utils/project';
 
 export const useProjectSearchParams = () => {
   const [param, setParam] = useUrlQueryParam(['name', 'personId']);
@@ -18,13 +20,20 @@ export const useProjectModal = () => {
   const [{projectCreate}, setProjectCreate] = useUrlQueryParam([
     'projectCreate'
   ]);
+  const [{editingProjectId}, setEditingProjectId] = useUrlQueryParam(['editingProjectId']);
+  const [_, setUrlParams] = useSearchParams();
+  const {data: editingProject, isLoading} = useProject(Number(editingProjectId));
 
   const open = () => setProjectCreate({projectCreate: true});
-  const close = () => setProjectCreate({projectCreate: false});
+  const close = () => setUrlParams({projectCreate: '', editingProjectId: ''});
+  const startEdit = (id: number) => setEditingProjectId({editingProjectId: id});
 
   return {
-    projectModalOpen: projectCreate === 'true',
+    projectModalOpen: projectCreate === 'true' || !!editingProjectId,
     open,
-    close
+    close,
+    startEdit,
+    editingProject,
+    isLoading
   };
 };
